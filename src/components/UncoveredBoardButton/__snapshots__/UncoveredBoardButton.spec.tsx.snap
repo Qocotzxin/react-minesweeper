@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UncoveredBoardButton Snapshot Should render correctly and match snapshot. 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-1mbwnhf"
+    data-testid="UncoveredBoardButton"
+  >
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-vhbbj2-MuiTypography-root"
+    />
+  </div>
+</div>
+`;

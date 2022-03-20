@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Board Snapshot Should render correctly and match snapshot. 1`] = `
+<div>
+  <div
+    class="css-11da20c-MuiStack-root"
+    data-testid="Board"
+  >
+    <div
+      style="position: relative; height: 240px; width: 240px; overflow: auto; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 24px; width: 96px;"
+      >
+        <div
+          class="css-m69qwo-MuiStack-root"
+          style="position: absolute; left: 0px; top: 0px; height: 24px; width: 24px;"
+        >
+          <div
+            class="MuiBox-root css-1lq7alf"
+            data-testid="DefaultBoardButton"
+          />
+        </div>
+        <div
+          class="css-m69qwo-MuiStack-root"
+          style="position: absolute; left: 24px; top: 0px; height: 24px; width: 24px;"
+        >
+          <div
+            class="MuiBox-root css-1lq7alf"
+            data-testid="DefaultBoardButton"
+          />
+        </div>
+        <div
+          class="css-m69qwo-MuiStack-root"
+          style="position: absolute; left: 48px; top: 0px; height: 24px; width: 24px;"
+        >
+          <div
+            class="MuiBox-root css-1lq7alf"
+            data-testid="DefaultBoardButton"
+          />
+        </div>
+        <div
+          class="css-m69qwo-MuiStack-root"
+          style="position: absolute; left: 72px; top: 0px; height: 24px; width: 24px;"
+        >
+          <div
+            class="MuiBox-root css-1lq7alf"
+            data-testid="DefaultBoardButton"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
