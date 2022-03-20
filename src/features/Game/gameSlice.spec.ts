@@ -36,7 +36,7 @@ describe("Game reducer", () => {
     });
   });
 
-  it("Should update set difficulty state to 1 if no difficulty was sent.", () => {
+  it("Should set difficulty state to 1 if no difficulty was sent.", () => {
     const previousState = {
       map: [],
       isReady: false,
@@ -54,7 +54,7 @@ describe("Game reducer", () => {
     });
   });
 
-  it("Should update map and isLoadingBoard properties when updateBoard is called.", () => {
+  it("Should update map and isLoadingBoard states when updateBoard is called.", () => {
     const previousState = {
       map: [],
       isReady: false,
@@ -74,7 +74,7 @@ describe("Game reducer", () => {
     });
   });
 
-  it("Should update only map propertiey when updateBoard is called and isLoadingBoard previous state is false.", () => {
+  it("Should update only map state when updateBoard is called and isLoadingBoard previous state is false.", () => {
     const previousState = {
       map: [],
       isReady: false,
@@ -94,7 +94,7 @@ describe("Game reducer", () => {
     });
   });
 
-  it("Should update message propertie when updateMessage is called.", () => {
+  it("Should update message state when updateMessage is called.", () => {
     const previousState = {
       map: [],
       isReady: false,
@@ -114,7 +114,7 @@ describe("Game reducer", () => {
     });
   });
 
-  it("Should not modify any property when selectCoordinates is called.", () => {
+  it("Should not modify any state when selectCoordinates is called.", () => {
     const previousState = {
       map: [],
       isReady: false,
@@ -134,7 +134,7 @@ describe("Game reducer", () => {
     });
   });
 
-  it("Should modify isReady property when confirmSocketIsReady is called.", () => {
+  it("Should modify isReady state when confirmSocketIsReady is called.", () => {
     const previousState = {
       map: [],
       isReady: false,

@@ -3,7 +3,7 @@
 exports[`Board Snapshot Should render correctly and match snapshot. 1`] = `
 <div>
   <div
-    class="css-11da20c-MuiStack-root"
+    class="css-sdzd41-MuiStack-root"
     data-testid="Board"
   >
     <div
@@ -17,8 +17,10 @@ exports[`Board Snapshot Should render correctly and match snapshot. 1`] = `
           style="position: absolute; left: 0px; top: 0px; height: 24px; width: 24px;"
         >
           <div
-            class="MuiBox-root css-1lq7alf"
+            aria-label="Tile 0 0"
+            class="MuiBox-root css-7wl9ds"
             data-testid="DefaultBoardButton"
+            tabindex="0"
           />
         </div>
         <div
@@ -26,8 +28,10 @@ exports[`Board Snapshot Should render correctly and match snapshot. 1`] = `
           style="position: absolute; left: 24px; top: 0px; height: 24px; width: 24px;"
         >
           <div
-            class="MuiBox-root css-1lq7alf"
+            aria-label="Tile 1 0"
+            class="MuiBox-root css-7wl9ds"
             data-testid="DefaultBoardButton"
+            tabindex="0"
           />
         </div>
         <div
@@ -35,8 +39,10 @@ exports[`Board Snapshot Should render correctly and match snapshot. 1`] = `
           style="position: absolute; left: 48px; top: 0px; height: 24px; width: 24px;"
         >
           <div
-            class="MuiBox-root css-1lq7alf"
+            aria-label="Tile 2 0"
+            class="MuiBox-root css-7wl9ds"
             data-testid="DefaultBoardButton"
+            tabindex="0"
           />
         </div>
         <div
@@ -44,8 +50,10 @@ exports[`Board Snapshot Should render correctly and match snapshot. 1`] = `
           style="position: absolute; left: 72px; top: 0px; height: 24px; width: 24px;"
         >
           <div
-            class="MuiBox-root css-1lq7alf"
+            aria-label="Tile 3 0"
+            class="MuiBox-root css-7wl9ds"
             data-testid="DefaultBoardButton"
+            tabindex="0"
           />
         </div>
       </div>

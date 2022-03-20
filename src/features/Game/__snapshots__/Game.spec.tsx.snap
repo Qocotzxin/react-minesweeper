@@ -9,7 +9,7 @@ exports[`Game Snapshot Should render correctly and match snapshot. 1`] = `
       class="css-le9p6c-MuiStack-root"
     >
       <h1
-        class="MuiTypography-root MuiTypography-body1 css-1ymyiii-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-1887mij-MuiTypography-root"
       >
         Welcome to Minesweeper!
       </h1>
@@ -202,7 +202,7 @@ exports[`Game Snapshot Should render correctly and match snapshot. 1`] = `
         </button>
       </div>
       <div
-        class="css-t9pp5n-MuiStack-root"
+        class="css-1opd0pm-MuiStack-root"
         data-testid="Board"
       >
         <div

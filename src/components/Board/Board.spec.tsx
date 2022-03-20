@@ -1,6 +1,6 @@
 import { useMediaQuery } from "@mui/material";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Piece } from "../../enum";
+import { Message, Piece } from "../../enum";
 import { Board } from "./Board";
 
 const mockOnClick = jest.fn();
@@ -10,6 +10,7 @@ const boardMockProps = {
     `${Piece.uncovered}${Piece.uncovered}${Piece.uncovered}${Piece.uncovered}`,
   ],
   difficulty: 1,
+  message: Message.ok,
   onClick: mockOnClick,
 };
 
@@ -56,7 +57,14 @@ describe("Board", () => {
     });
 
     it("Should render a UncoveredBoardButton component for each string NOT equal to □.", () => {
-      render(<Board onClick={jest.fn()} boardMap={["1"]} difficulty={1} />);
+      render(
+        <Board
+          onClick={jest.fn()}
+          boardMap={["1"]}
+          difficulty={1}
+          message={Message.ok}
+        />
+      );
 
       const defaultButtons = screen.queryAllByTestId("DefaultBoardButton");
       const uncoveredButtons = screen.getAllByTestId("UncoveredBoardButton");
@@ -91,11 +99,31 @@ describe("Board", () => {
     });
 
     it("Should NOT have a border if the board map is empty.", () => {
-      render(<Board onClick={jest.fn()} boardMap={[]} difficulty={1} />);
+      render(
+        <Board
+          onClick={jest.fn()}
+          boardMap={[]}
+          difficulty={1}
+          message={Message.ok}
+        />
+      );
 
       expect(screen.getByTestId("Board")).toHaveStyle({
         border: "none",
       });
+    });
+
+    it("Should display an overlay when the game is over.", () => {
+      render(
+        <Board
+          onClick={jest.fn()}
+          boardMap={[]}
+          difficulty={1}
+          message={Message.win}
+        />
+      );
+
+      expect(screen.getByTestId("Board-overlay")).toBeInTheDocument();
     });
   });
 });

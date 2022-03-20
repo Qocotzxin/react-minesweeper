@@ -3,8 +3,10 @@
 exports[`DefaultBoardButton Snapshot Should render correctly and match snapshot. 1`] = `
 <div>
   <div
-    class="MuiBox-root css-1lq7alf"
+    aria-label="Tile 1 2"
+    class="MuiBox-root css-7wl9ds"
     data-testid="DefaultBoardButton"
+    tabindex="0"
   />
 </div>
 `;
