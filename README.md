@@ -36,3 +36,7 @@ Build fully-functional UI for the game.
 
 - React 17.0, Material-ui 5.5, TypeScript 4.6, react-redux 7.2, redux-toolkit 1.8, redux-saga 1.1, node 14.19, yarn 1.22
   Source code:
+
+### Deployment:
+
+- This minesweeper is deployed using Vercel. You can check deployed version [here](https://react-minesweeper-phi.vercel.app/)

@@ -30,8 +30,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "ci-test": "CI=true react-scripts test",
     "test-coverage": "react-scripts test --coverage --watchAll",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -64,6 +66,7 @@
     "yarn": "1.22.17"
   },
   "devDependencies": {
-    "mock-websocket": "^0.0.7"
+    "mock-websocket": "^0.0.7",
+    "husky": "^7.0.0"
   }
 }
