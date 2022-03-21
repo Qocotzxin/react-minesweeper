@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DefaultBoardButton Snapshot Should render correctly and match snapshot. 1`] = `
+exports[`DefaultTile Snapshot Should render correctly and match snapshot. 1`] = `
 <div>
   <div
     aria-label="Tile 1 2"
     class="MuiBox-root css-7wl9ds"
-    data-testid="DefaultBoardButton"
+    data-testid="DefaultTile"
     tabindex="0"
   />
 </div>

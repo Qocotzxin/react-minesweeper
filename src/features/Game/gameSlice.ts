@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Message } from "../../enum";
-import { Coordinates } from "../../types";
 
 export interface GameState {
   map: string[];
@@ -36,19 +35,13 @@ export const gameSlice = createSlice({
     updateMessage(state, action: PayloadAction<string>) {
       state.message = action.payload.split("open:")[1].trim() as Message;
     },
-    selectCoordinates(state, action: PayloadAction<Coordinates>) {},
     confirmSocketIsReady(state) {
       state.isReady = true;
     },
   },
 });
 
-export const {
-  startGame,
-  updateBoard,
-  selectCoordinates,
-  confirmSocketIsReady,
-  updateMessage,
-} = gameSlice.actions;
+export const { startGame, updateBoard, confirmSocketIsReady, updateMessage } =
+  gameSlice.actions;
 
 export default gameSlice.reducer;

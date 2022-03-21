@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { FC } from "react";
 import { Provider } from "react-redux";
 import { Message } from "../../enum";
+import tileReducer from "../Tiles/tileSlice";
 import { Game } from "./Game";
 import gameReducer, { GameState } from "./gameSlice";
 
@@ -10,7 +11,7 @@ interface WrapperProps {
   preloadedState?: GameState;
 }
 
-const defaultState = {
+const defaultGameState = {
   isLoadingBoard: false,
   map: [],
   isReady: true,
@@ -18,12 +19,17 @@ const defaultState = {
   difficulty: 1,
 };
 
-const Wrapper: FC<WrapperProps> = ({ preloadedState = defaultState }) => {
+const defaultTileState = {
+  availableFlags: 10,
+  flaggedTiles: [],
+};
+
+const Wrapper: FC<WrapperProps> = ({ preloadedState = defaultGameState }) => {
   return (
     <Provider
       store={configureStore({
-        reducer: { game: gameReducer },
-        preloadedState: { game: preloadedState },
+        reducer: { game: gameReducer, tile: tileReducer },
+        preloadedState: { game: preloadedState, tile: defaultTileState },
       })}
     >
       <Game />

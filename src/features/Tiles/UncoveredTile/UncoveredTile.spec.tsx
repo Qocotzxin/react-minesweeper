@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import { UncoveredBoardButton } from "./UncoveredBoardButton";
+import { UncoveredTile } from "./UncoveredTile";
 
-describe("UncoveredBoardButton", () => {
+describe("UncoveredTile", () => {
   describe("Snapshot", () => {
     it("Should render correctly and match snapshot.", () => {
-      const { container } = render(<UncoveredBoardButton />);
+      const { container } = render(<UncoveredTile />);
 
       expect(container).toMatchSnapshot();
     });
@@ -12,19 +12,17 @@ describe("UncoveredBoardButton", () => {
 
   describe("Behavior", () => {
     it("Should render render children as it is when its not equal to *.", () => {
-      render(<UncoveredBoardButton>1</UncoveredBoardButton>);
+      render(<UncoveredTile>1</UncoveredTile>);
 
       expect(
-        screen.queryByTestId("UncoveredBoardButton-bomb-icon")
+        screen.queryByTestId("UncoveredTile-bomb-icon")
       ).not.toBeInTheDocument();
     });
 
     it("Should render a bomb icon when children passed is *.", () => {
-      render(<UncoveredBoardButton>*</UncoveredBoardButton>);
+      render(<UncoveredTile>*</UncoveredTile>);
 
-      expect(
-        screen.getByTestId("UncoveredBoardButton-bomb-icon")
-      ).toBeInTheDocument();
+      expect(screen.getByTestId("UncoveredTile-bomb-icon")).toBeInTheDocument();
     });
   });
 });

@@ -1,6 +1,7 @@
 import { Server, WebSocket } from "mock-websocket";
 import { call, takeEvery, takeLatest } from "redux-saga/effects";
-import { selectCoordinates, startGame } from "../features/Game/gameSlice";
+import { startGame } from "../features/Game/gameSlice";
+import { selectCoordinates } from "../features/Tiles/tileSlice";
 import socketClient from "../services/SocketClient";
 import {
   createSocketChannel,

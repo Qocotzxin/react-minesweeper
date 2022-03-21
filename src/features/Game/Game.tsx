@@ -5,7 +5,8 @@ import { useAppDispatch } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { Board, LevelSelector, ResultMessage } from "../../components";
 import { Message } from "../../enum";
-import { selectCoordinates, startGame } from "./gameSlice";
+import { resetFlags } from "../Tiles/tileSlice";
+import { startGame } from "./gameSlice";
 
 export function Game() {
   const [showInfo, setShowInfo] = useState(false);
@@ -24,16 +25,9 @@ export function Game() {
   const onStart = useCallback(
     (levelDifficulty) => {
       dispatch(startGame(levelDifficulty));
+      dispatch(resetFlags());
       setShowInfo(true);
     },
-    [dispatch]
-  );
-
-  /**
-   * Triggers selectCoordinates action with specified coordinates.
-   */
-  const onBoardClick = useCallback(
-    (coords) => dispatch(selectCoordinates(coords)),
     [dispatch]
   );
 
@@ -44,7 +38,7 @@ export function Game() {
       height="100vh"
       bgcolor="#171923"
       color="whitesmoke"
-      p="4rem"
+      p="2rem"
     >
       <Stack width="100%" alignItems="center" justifyContent="center">
         <Typography component="h1" fontSize="2rem" textAlign="center">
@@ -58,14 +52,13 @@ export function Game() {
         ) : (
           <Board
             boardMap={boardMap}
-            onClick={onBoardClick}
             difficulty={difficulty}
             message={message}
           />
         )}
         {showInfo && !isLoadingBoard && message === Message.ok && (
           <Alert severity="info" onClose={() => setShowInfo(false)}>
-            You can right click a tile to add a flag (on mobile press it).
+            Right click a tile to flag it (on mobile press for a second).
           </Alert>
         )}
         {message !== Message.ok && <ResultMessage message={message} />}

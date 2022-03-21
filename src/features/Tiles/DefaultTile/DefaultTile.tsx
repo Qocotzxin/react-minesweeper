@@ -1,31 +1,41 @@
 import { Box, CircularProgress } from "@mui/material";
 import { FC, KeyboardEvent, SyntheticEvent, useState } from "react";
 import { HiFlag } from "react-icons/hi";
-import { Coordinates } from "../../types";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../../app/hooks";
+import { RootState } from "../../../app/store";
+import { selectCoordinates, updateFlaggedTiles } from "../tileSlice";
 
-interface DefaultBoardButtonProps {
+interface DefaultTileProps {
   colIndex: number;
   rowIndex: number;
   disabled?: boolean;
-  onClick: (coordinates: Coordinates) => void;
 }
 
-export const DefaultBoardButton: FC<DefaultBoardButtonProps> = ({
+export const DefaultTile: FC<DefaultTileProps> = ({
   colIndex,
   rowIndex,
   disabled,
-  onClick,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [hasFlag, setHasFlag] = useState(false);
+  const dispatch = useAppDispatch();
+  const flaggedTiles = useSelector(
+    (state: RootState) => state.tile.flaggedTiles
+  );
+
+  const isFlagged = flaggedTiles.find(
+    (tile) => tile.x === colIndex && tile.y === rowIndex
+  );
 
   /**
    * Executes the click prop callback passing the coordinates.
    */
   const onTileClick = () => {
-    setHasFlag(false);
     setIsLoading(true);
-    onClick({ x: colIndex, y: rowIndex });
+    dispatch(selectCoordinates({ x: colIndex, y: rowIndex }));
+    if (isFlagged) {
+      dispatch(updateFlaggedTiles({ x: colIndex, y: rowIndex }));
+    }
   };
 
   /**
@@ -33,7 +43,7 @@ export const DefaultBoardButton: FC<DefaultBoardButtonProps> = ({
    */
   const onContextMenu = (event: SyntheticEvent) => {
     event.preventDefault();
-    setHasFlag((flagged) => !flagged);
+    dispatch(updateFlaggedTiles({ x: colIndex, y: rowIndex }));
   };
 
   const onChange = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -47,7 +57,7 @@ export const DefaultBoardButton: FC<DefaultBoardButtonProps> = ({
       aria-label={`Tile ${colIndex} ${rowIndex}`}
       onKeyUp={onChange}
       tabIndex={0}
-      data-testid="DefaultBoardButton"
+      data-testid="DefaultTile"
       bgcolor="rgb(148, 151, 156)"
       border="solid #808080"
       width="1.5rem"
@@ -68,11 +78,11 @@ export const DefaultBoardButton: FC<DefaultBoardButtonProps> = ({
         },
       }}
     >
-      {hasFlag && (
+      {isFlagged && !isLoading && (
         <HiFlag
           size={18}
           color="rgb(201, 91, 118)"
-          data-testid="DefaultBoardButton-flag"
+          data-testid="DefaultTile-flag"
         />
       )}
       {isLoading && <CircularProgress color="secondary" size={18} />}

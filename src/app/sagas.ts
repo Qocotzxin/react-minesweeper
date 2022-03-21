@@ -13,11 +13,11 @@ import { Coordinates, WebSocketEvent } from "../types";
 import {
   startGame,
   updateBoard,
-  selectCoordinates,
   confirmSocketIsReady,
   updateMessage,
 } from "../features/Game/gameSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { selectCoordinates } from "../features/Tiles/tileSlice";
 
 /**
  * Creates event channel from socket and setup listeners.

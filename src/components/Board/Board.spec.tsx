@@ -1,9 +1,11 @@
 import { useMediaQuery } from "@mui/material";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Message, Piece } from "../../enum";
 import { Board } from "./Board";
-
-const mockOnClick = jest.fn();
+import tileReducer from "../../features/Tiles/tileSlice";
+import { FC } from "react";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
 
 const boardMockProps = {
   boardMap: [
@@ -11,7 +13,6 @@ const boardMockProps = {
   ],
   difficulty: 1,
   message: Message.ok,
-  onClick: mockOnClick,
 };
 
 jest.mock("@mui/material", () => ({
@@ -24,57 +25,72 @@ afterAll(() => {
   jest.resetModules();
 });
 
-afterEach(() => {
-  mockOnClick.mockClear();
-});
+const defaultState = {
+  availableFlags: 10,
+  flaggedTiles: [],
+};
+
+const Wrapper: FC = ({ children }) => {
+  return (
+    <Provider
+      store={configureStore({
+        reducer: { tile: tileReducer },
+        preloadedState: { tile: defaultState },
+      })}
+    >
+      {children}
+    </Provider>
+  );
+};
 
 describe("Board", () => {
   describe("Snapshot", () => {
     it("Should render correctly and match snapshot.", () => {
-      const { container } = render(<Board {...boardMockProps} />);
+      const { container } = render(
+        <Wrapper>
+          <Board {...boardMockProps} />
+        </Wrapper>
+      );
 
       expect(container).toMatchSnapshot();
     });
   });
 
   describe("Behavior", () => {
-    it("Should execute onClick event passed through props when clicking a board button.", () => {
-      render(<Board {...boardMockProps} />);
-
-      fireEvent.click(screen.getAllByTestId("DefaultBoardButton")[0]);
-
-      expect(mockOnClick).toHaveBeenCalledTimes(1);
-    });
-
-    it("Should render a DefaultBoardButton component for each string equal to □.", () => {
-      render(<Board {...boardMockProps} />);
-
-      const defaultButtons = screen.getAllByTestId("DefaultBoardButton");
-      const uncoveredButtons = screen.queryAllByTestId("UncoveredBoardButton");
-
-      expect(defaultButtons.length).toEqual(4);
-      expect(uncoveredButtons.length).toEqual(0);
-    });
-
-    it("Should render a UncoveredBoardButton component for each string NOT equal to □.", () => {
+    it("Should render a DefaultTile component for each string equal to □.", () => {
       render(
-        <Board
-          onClick={jest.fn()}
-          boardMap={["1"]}
-          difficulty={1}
-          message={Message.ok}
-        />
+        <Wrapper>
+          <Board {...boardMockProps} />
+        </Wrapper>
       );
 
-      const defaultButtons = screen.queryAllByTestId("DefaultBoardButton");
-      const uncoveredButtons = screen.getAllByTestId("UncoveredBoardButton");
+      const defaultButtons = screen.getAllByTestId("DefaultTile");
+      const UncoveredTiles = screen.queryAllByTestId("UncoveredTile");
+
+      expect(defaultButtons.length).toEqual(4);
+      expect(UncoveredTiles.length).toEqual(0);
+    });
+
+    it("Should render a UncoveredTile component for each string NOT equal to □.", () => {
+      render(
+        <Wrapper>
+          <Board boardMap={["1"]} difficulty={1} message={Message.ok} />
+        </Wrapper>
+      );
+
+      const defaultButtons = screen.queryAllByTestId("DefaultTile");
+      const UncoveredTiles = screen.getAllByTestId("UncoveredTile");
 
       expect(defaultButtons.length).toEqual(0);
-      expect(uncoveredButtons.length).toEqual(1);
+      expect(UncoveredTiles.length).toEqual(1);
     });
 
     it("Should set the max height of the board to 15 rows in mobile resolutions.", () => {
-      render(<Board {...boardMockProps} />);
+      render(
+        <Wrapper>
+          <Board {...boardMockProps} />
+        </Wrapper>
+      );
 
       expect(screen.getByTestId("Board")).toHaveStyle({
         "max-height": "240px",
@@ -83,7 +99,11 @@ describe("Board", () => {
 
     it("Should set the max height of the board to 30 rows in desktop resolutions.", () => {
       (useMediaQuery as jest.Mock).mockImplementation(() => true);
-      render(<Board {...boardMockProps} />);
+      render(
+        <Wrapper>
+          <Board {...boardMockProps} />
+        </Wrapper>
+      );
 
       expect(screen.getByTestId("Board")).toHaveStyle({
         "max-height": "480px",
@@ -91,7 +111,11 @@ describe("Board", () => {
     });
 
     it("Should have a border if the board map have elements.", () => {
-      render(<Board {...boardMockProps} />);
+      render(
+        <Wrapper>
+          <Board {...boardMockProps} />
+        </Wrapper>
+      );
 
       expect(screen.getByTestId("Board")).toHaveStyle({
         border: "4px solid whitesmoke",
@@ -100,12 +124,9 @@ describe("Board", () => {
 
     it("Should NOT have a border if the board map is empty.", () => {
       render(
-        <Board
-          onClick={jest.fn()}
-          boardMap={[]}
-          difficulty={1}
-          message={Message.ok}
-        />
+        <Wrapper>
+          <Board boardMap={[]} difficulty={1} message={Message.ok} />
+        </Wrapper>
       );
 
       expect(screen.getByTestId("Board")).toHaveStyle({
@@ -115,12 +136,9 @@ describe("Board", () => {
 
     it("Should display an overlay when the game is over.", () => {
       render(
-        <Board
-          onClick={jest.fn()}
-          boardMap={[]}
-          difficulty={1}
-          message={Message.win}
-        />
+        <Wrapper>
+          <Board boardMap={[]} difficulty={1} message={Message.win} />
+        </Wrapper>
       );
 
       expect(screen.getByTestId("Board-overlay")).toBeInTheDocument();

@@ -33,7 +33,8 @@ export const LevelSelector: FC<LevelSelectorProps> = memo(
         width="100%"
         justifyContent="center"
         alignItems="center"
-        my="2rem"
+        mt="2rem"
+        mb="1rem"
       >
         <Stack justifyContent="center" alignItems="center">
           <Typography component="legend" mb="1rem">

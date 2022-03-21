@@ -1,7 +1,7 @@
+import { selectCoordinates } from "../Tiles/tileSlice";
 import { Message, Piece } from "../../enum";
 import gameReducer, {
   confirmSocketIsReady,
-  selectCoordinates,
   startGame,
   updateBoard,
   updateMessage,
