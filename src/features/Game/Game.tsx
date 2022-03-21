@@ -5,7 +5,6 @@ import { useAppDispatch } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { Board, LevelSelector, ResultMessage } from "../../components";
 import { Message } from "../../enum";
-import { resetFlags } from "../Tiles/tileSlice";
 import { startGame } from "./gameSlice";
 
 export function Game() {
@@ -25,7 +24,6 @@ export function Game() {
   const onStart = useCallback(
     (levelDifficulty) => {
       dispatch(startGame(levelDifficulty));
-      dispatch(resetFlags());
       setShowInfo(true);
     },
     [dispatch]
@@ -57,8 +55,13 @@ export function Game() {
           />
         )}
         {showInfo && !isLoadingBoard && message === Message.ok && (
-          <Alert severity="info" onClose={() => setShowInfo(false)}>
-            Right click a tile to flag it (on mobile press for a second).
+          <Alert
+            severity="info"
+            onClose={() => setShowInfo(false)}
+            data-testid="Game-alert"
+          >
+            Right click a tile to flag it (or press for a second on mobile
+            devices). Scroll the grid to (maybe) find more tiles.
           </Alert>
         )}
         {message !== Message.ok && <ResultMessage message={message} />}

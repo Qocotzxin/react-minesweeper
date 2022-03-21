@@ -31,7 +31,12 @@ Fully functional Minesweeper game with 4 difficulty levels.
 ## Tech Stack:
 
 - React 17.0, Material-ui 5.5, TypeScript 4.6, react-redux 7.2, redux-toolkit 1.8, redux-saga 1.1, node 14.19, yarn 1.22
-  Source code:
+
+## General notes:
+
+- a11y: this project allows player to use mouse, keyboard or touch actions to play the game.
+- User is allowed to use up to 10 flags per level.
+- Grid is virtualized to improve loading time.
 
 ## Deployment:
 

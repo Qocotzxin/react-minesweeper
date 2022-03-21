@@ -46,7 +46,7 @@ export const DefaultTile: FC<DefaultTileProps> = ({
     dispatch(updateFlaggedTiles({ x: colIndex, y: rowIndex }));
   };
 
-  const onChange = (event: KeyboardEvent<HTMLDivElement>) => {
+  const onKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter") {
       onTileClick();
     }
@@ -55,7 +55,7 @@ export const DefaultTile: FC<DefaultTileProps> = ({
   return (
     <Box
       aria-label={`Tile ${colIndex} ${rowIndex}`}
-      onKeyUp={onChange}
+      onKeyUp={onKeyUp}
       tabIndex={0}
       data-testid="DefaultTile"
       bgcolor="rgb(148, 151, 156)"

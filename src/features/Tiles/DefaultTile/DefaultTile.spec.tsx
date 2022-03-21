@@ -54,12 +54,59 @@ describe("DefaultTile", () => {
   describe("Behavior", () => {
     it("Should call selectCoordinates with the right coordinates when tile is clicked.", () => {
       render(<Wrapper />);
-      const spy = jest.spyOn(tiles, "selectCoordinates");
+      const spySelectCoordinates = jest.spyOn(tiles, "selectCoordinates");
+      const spyUpdateFlaggedTiles = jest.spyOn(tiles, "updateFlaggedTiles");
+
+      fireEvent.click(screen.getByTestId("DefaultTile"));
+
+      expect(spySelectCoordinates).toHaveBeenCalledTimes(1);
+      expect(spySelectCoordinates).toHaveBeenCalledWith({ x: 1, y: 2 });
+      expect(spyUpdateFlaggedTiles).not.toHaveBeenCalled();
+      spySelectCoordinates.mockClear();
+      spyUpdateFlaggedTiles.mockClear();
+    });
+
+    it("Should call selectCoordinates with the right coordinates when ENTER key is pressed on a tile.", () => {
+      render(<Wrapper />);
+      const spySelectCoordinates = jest.spyOn(tiles, "selectCoordinates");
+      const spyUpdateFlaggedTiles = jest.spyOn(tiles, "updateFlaggedTiles");
+
+      fireEvent.keyUp(screen.getByTestId("DefaultTile"), { key: "Enter" });
+
+      expect(spySelectCoordinates).toHaveBeenCalledTimes(1);
+      expect(spySelectCoordinates).toHaveBeenCalledWith({ x: 1, y: 2 });
+      expect(spyUpdateFlaggedTiles).not.toHaveBeenCalled();
+      spySelectCoordinates.mockClear();
+      spyUpdateFlaggedTiles.mockClear();
+    });
+
+    it("Should NOT call selectCoordinates when other key than ENTER is pressed on a tile.", () => {
+      render(<Wrapper />);
+      const spySelectCoordinates = jest.spyOn(tiles, "selectCoordinates");
+      const spyUpdateFlaggedTiles = jest.spyOn(tiles, "updateFlaggedTiles");
+
+      fireEvent.keyUp(screen.getByTestId("DefaultTile"), { key: "Tab" });
+
+      expect(spySelectCoordinates).not.toHaveBeenCalled();
+      expect(spyUpdateFlaggedTiles).not.toHaveBeenCalled();
+
+      spySelectCoordinates.mockClear();
+      spyUpdateFlaggedTiles.mockClear();
+    });
+
+    it("Should call updateFlaggedTiles with the right coordinates when tile is clicked and its already flagged.", () => {
+      const preloadedState = {
+        availableFlags: 9,
+        flaggedTiles: [{ x: 1, y: 2 }],
+      };
+      render(<Wrapper preloadedState={preloadedState} />);
+      const spy = jest.spyOn(tiles, "updateFlaggedTiles");
 
       fireEvent.click(screen.getByTestId("DefaultTile"));
 
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith({ x: 1, y: 2 });
+      spy.mockClear();
     });
 
     it("Should call updateFlaggedTiles with the right coordinates when tile is right clicked.", () => {
@@ -70,6 +117,7 @@ describe("DefaultTile", () => {
 
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith({ x: 1, y: 2 });
+      spy.mockClear();
     });
 
     it("Should display a spinner when the button is clicked.", () => {

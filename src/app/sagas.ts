@@ -1,3 +1,4 @@
+import { PayloadAction } from "@reduxjs/toolkit";
 import { END, EventChannel, eventChannel } from "redux-saga";
 import {
   all,
@@ -8,16 +9,15 @@ import {
   takeEvery,
   takeLatest,
 } from "redux-saga/effects";
-import socketClient from "../services/SocketClient";
-import { Coordinates, WebSocketEvent } from "../types";
 import {
+  confirmSocketIsReady,
   startGame,
   updateBoard,
-  confirmSocketIsReady,
   updateMessage,
 } from "../features/Game/gameSlice";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { selectCoordinates } from "../features/Tiles/tileSlice";
+import { resetFlags, selectCoordinates } from "../features/Tiles/tileSlice";
+import socketClient from "../services/SocketClient";
+import { Coordinates, WebSocketEvent } from "../types";
 
 /**
  * Creates event channel from socket and setup listeners.
@@ -36,14 +36,20 @@ export function createSocketChannel(
       emit(error as END);
     };
 
+    const handleClose = () => {
+      emit(END);
+    };
+
     socket.addEventListener("open", handleOpen);
     socket.addEventListener("message", handleMessage);
     socket.addEventListener("error", handleError);
+    socket.addEventListener("close", handleClose);
 
     return () => {
       socket.removeEventListener("open", handleOpen);
       socket.removeEventListener("message", handleMessage);
       socket.removeEventListener("error", handleError);
+      socket.addEventListener("close", handleClose);
     };
   });
 }
@@ -64,6 +70,7 @@ export function* handleStartGame(action: PayloadAction<number | null>) {
     { context: socket, fn: socket.send },
     `new ${action.payload || 1}`
   );
+  yield put(resetFlags());
 }
 
 /**

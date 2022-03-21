@@ -1,7 +1,7 @@
 import { Server, WebSocket } from "mock-websocket";
-import { call, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { startGame } from "../features/Game/gameSlice";
-import { selectCoordinates } from "../features/Tiles/tileSlice";
+import { resetFlags, selectCoordinates } from "../features/Tiles/tileSlice";
 import socketClient from "../services/SocketClient";
 import {
   createSocketChannel,
@@ -42,6 +42,7 @@ describe("Sagas", () => {
       expect(gen.next().value).toEqual(
         call({ context: socketClient, fn: socketClient.send }, `new 1`)
       );
+      expect(gen.next().value).toEqual(put(resetFlags()));
     });
   });
 
@@ -63,7 +64,7 @@ describe("Sagas", () => {
       const spy = jest.spyOn(socket, "addEventListener");
       // @ts-ignore
       createSocketChannel(socket);
-      expect(spy).toHaveBeenCalledTimes(3);
+      expect(spy).toHaveBeenCalledTimes(4);
     });
   });
 
